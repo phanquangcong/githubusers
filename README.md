@@ -90,7 +90,7 @@ The data flow in the app follows these steps:
 
 This diagram shows the flow of data through the application when a user is fetched from the API and displayed in the UI:
 
-![image.png](Untitled%2017d2bbf5797180a1b24de0f96754b0dc/image.png)
+![image.png](Resources/image.png)
 
 ---
 
