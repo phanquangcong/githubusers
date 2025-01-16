@@ -14,7 +14,7 @@ public struct UserDetail: Decodable {
   public let location: String?
   public let followers: Int?
   public let following: Int?
-  
+
   enum CodingKeys: String, CodingKey {
     case login
     case avatarUrl = "avatar_url"

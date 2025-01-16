@@ -11,7 +11,7 @@ import Networking
 struct UserMapper: Mappable {
   typealias Input = [User]
   typealias Output = [UserEntity]
-    
+
   func map(_ input: [User]) throws -> [UserEntity] {
     input.map {
       return UserEntity(

@@ -28,4 +28,3 @@ class UserUseCaseMock: UserUseCase {
         fatalError("getUserHandler returns can't have a default value thus its handler must be set")
     }
 }
-

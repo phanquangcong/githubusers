@@ -12,11 +12,11 @@ final class UserDetailViewModel: ObservableObject {
   @Published var userDetail: UserDetailEntity?
   @Published var isLoading: Bool = false
   @Published var errorMessage: String? = nil
-  
+
   init(userRepository: UserUseCase) {
     self.userRepository = userRepository
   }
-  
+
   func fetchUserDetail(loginUsername: String) async {
     isLoading = true
     do {

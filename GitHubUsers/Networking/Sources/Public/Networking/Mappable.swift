@@ -16,13 +16,13 @@ import Foundation
 /// - `Input`: The type of the input data (conforming to `Decodable`).
 /// - `Output`: The type of the output data after transformation.
 public protocol Mappable {
-  
+
   /// The type of the input data that will be transformed.
   associatedtype Input: Decodable
-  
+
   /// The type of the output data after transformation.
   associatedtype Output
-  
+
   /// Maps the input data to the output data.
   ///
   /// - Parameter input: The input data of type `Input`, which is typically received from an external source

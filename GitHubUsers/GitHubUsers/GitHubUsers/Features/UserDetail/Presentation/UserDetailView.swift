@@ -10,12 +10,12 @@ struct UserDetailView: View {
   @EnvironmentObject private var router: Router
   @StateObject var viewModel: UserDetailViewModel
   private let loginUsername: String
-  
+
   init(loginUsername: String, viewModel: UserDetailViewModel) {
     self.loginUsername = loginUsername
     _viewModel = .init(wrappedValue: viewModel)
   }
-  
+
   var body: some View {
     VStack {
       if let errorMessage = viewModel.errorMessage {
@@ -23,7 +23,7 @@ struct UserDetailView: View {
           .foregroundColor(.red)
           .padding()
       }
-      
+
       if viewModel.isLoading {
         ProgressView("Loading...")
           .padding()
@@ -62,7 +62,7 @@ struct UserDetailView: View {
                 .background(.gray) // Use different colors for follow/following
                 .cornerRadius(8)
             }
-            
+
             Button(action: {
               // Action for following button
             }) {
