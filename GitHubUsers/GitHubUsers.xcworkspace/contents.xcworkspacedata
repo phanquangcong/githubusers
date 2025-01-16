@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:GitHubUsers/GitHubUsers.xcodeproj">
+      location = "group:GitHubUsers.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Logger">

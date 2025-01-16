@@ -1,0 +1,28 @@
+{
+  "configurations" : [
+    {
+      "id" : "D1DB6558-3853-4985-9C24-D709AFF9A724",
+      "name" : "Configuration 1",
+      "options" : {
+        "targetForVariableExpansion" : {
+          "containerPath" : "container:GitHubUsers.xcodeproj",
+          "identifier" : "24AD16822D38098600320A16",
+          "name" : "GitHubUsers"
+        }
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:GitHubUsers.xcodeproj",
+        "identifier" : "24AD16922D38098700320A16",
+        "name" : "GitHubUsersTests"
+      }
+    }
+  ],
+  "version" : 1
+}
