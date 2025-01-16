@@ -12,7 +12,7 @@ struct UserEntity: Identifiable, Equatable {
   let login: String
   let avatarUrl: String
   let htmlUrl: String
-  
+
   static func ==(lhs: UserEntity, rhs: UserEntity) -> Bool {
     return lhs.login == rhs.login
   }

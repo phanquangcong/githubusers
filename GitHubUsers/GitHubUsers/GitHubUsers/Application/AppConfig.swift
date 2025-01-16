@@ -17,7 +17,7 @@ struct AppConfig {
     return LoggerImpl(label: "GitHubUsers_PROD")
 #endif
   }()
-  
+
   init() {
     networkClient = NetworkClientServiceImpl(
       logger: logger,

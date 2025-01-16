@@ -10,25 +10,25 @@ import Logger
 
 /// Enum to represent the various error types that may occur during API requests.
 public enum APIError: Error, Equatable {
-  
+
   /// Error when the endpoint is invalid.
   case invalidEndpoint
-  
+
   /// Error when the server responds with a bad status code (i.e., non-2xx range).
   case badServerResponse
-  
+
   /// Error when there is no network connectivity.
   case networkError
-  
+
   /// Error that occurs during parsing of data.
   case parsing(Error)
-  
+
   /// Error related to an invalid access token (e.g., expired or malformed).
   case invalidAccessToken
-  
+
   /// Error related to an invalid refresh token (e.g., expired or malformed).
   case invalidRefreshToken
-  
+
   // Custom comparison for equality between `APIError` cases.
   public static func == (lhs: APIError, rhs: APIError) -> Bool {
     switch (lhs, rhs) {
@@ -65,12 +65,12 @@ public typealias APIResponse = (data: Data, statusCode: Int)
 
 /// Protocol for the network client service, defining methods to perform API requests.
 public protocol NetworkClientService {
-  
+
   /// Perform an API request and return the raw response.
   /// - Parameter endpoint: The endpoint to make the request to.
   /// - Returns: A `Result` with the API response data or an error.
   func request(_ endpoint: EndPointType) async -> Result<APIResponse, APIError>
-  
+
   /// Perform an API request and decode the response data into a specific model.
   /// - Parameters:
   ///   - endpoint: The endpoint to make the request to.
@@ -79,7 +79,7 @@ public protocol NetworkClientService {
   /// - Throws: An error if the decoding fails or the request fails.
   /// - Returns: The decoded model of type `T`.
   func request<T: Decodable>(_ endpoint: EndPointType, as type: T.Type, using decoder: JSONDecoder) async throws -> T
-  
+
   /// Perform an API request and map the response data into a specific model using a mapper.
   /// - Parameters:
   ///   - endpoint: The endpoint to make the request to.
@@ -90,7 +90,7 @@ public protocol NetworkClientService {
 }
 
 public extension NetworkClientService {
-  
+
   /// Perform an API request and decode the response data into a specific model using the default `JSONDecoder`.
   /// - Parameters:
   ///   - endpoint: The endpoint to make the request to.
@@ -104,25 +104,25 @@ public extension NetworkClientService {
 
 /// Implementation of the `NetworkClientService` protocol that handles making API requests.
 public final class NetworkClientServiceImpl: NetworkClientService {
-  
+
   /// Configuration for the network client (e.g., base URL and headers).
   public struct Configuration {
     let baseURL: URL?
     let baseHeaders: [String: String]
-    
+
     /// Default configuration with no base URL and no headers.
     public init(baseURL: URL?, baseHeaders: [String: String]) {
       self.baseURL = baseURL
       self.baseHeaders = baseHeaders
     }
-    
+
     /// The default configuration.
     public static let `default` = Configuration(baseURL: nil, baseHeaders: [:])
   }
-  
+
   private let logger: Logger
   private let configuration: Configuration
-  
+
   /// Initializes a new `NetworkClientServiceImpl` with the provided logger and configuration.
   /// - Parameters:
   ///   - logger: A logger instance to log network requests and responses.
@@ -131,7 +131,7 @@ public final class NetworkClientServiceImpl: NetworkClientService {
     self.logger = logger
     self.configuration = configuration
   }
-  
+
   /// Builds the URLRequest from the provided endpoint.
   /// - Parameter endpoint: The API endpoint to build the request for.
   /// - Returns: A `URLRequest` object representing the request to be made.
@@ -139,17 +139,17 @@ public final class NetworkClientServiceImpl: NetworkClientService {
     guard let baseURL = configuration.baseURL else {
       return nil
     }
-    
+
     var components = URLComponents(url: baseURL, resolvingAgainstBaseURL: false) ?? URLComponents()
     components.path = endpoint.path
     components.queryItems = endpoint.urlQueries?.map { URLQueryItem(name: $0.key, value: $0.value) }
-    
+
     guard let url = components.url else { return nil }
-    
+
     var request = URLRequest(url: url)
     request.httpMethod = endpoint.httpMethod.rawValue
     request.allHTTPHeaderFields = configuration.baseHeaders.merging(endpoint.headers ?? [:]) { (_, new) in new }
-    
+
     switch endpoint.bodyParameter {
     case .data(let data):
       request.httpBody = data
@@ -160,10 +160,10 @@ public final class NetworkClientServiceImpl: NetworkClientService {
     default:
       break
     }
-    
+
     return request
   }
-  
+
   /// Performs an API request and returns the response data or an error.
   /// - Parameter endpoint: The API endpoint to request.
   /// - Returns: A `Result` containing the response data or an API error.
@@ -171,16 +171,16 @@ public final class NetworkClientServiceImpl: NetworkClientService {
     guard NetworkReachability.shared.isConnected else {
       return .failure(.networkError)
     }
-    
+
     guard let request = buildURLRequest(from: endpoint) else {
       return .failure(.invalidEndpoint)
     }
-    
+
     do {
       let (data, response) = try await URLSession.shared.data(for: request)
       let httpResponse = response as? HTTPURLResponse
       logger.log(request: request, data: data, response: httpResponse, error: nil)
-      
+
       guard let httpResponse = httpResponse, (200..<400).contains(httpResponse.statusCode) else {
         if httpResponse?.statusCode == 401 {
           return .failure(.invalidAccessToken)
@@ -196,7 +196,7 @@ public final class NetworkClientServiceImpl: NetworkClientService {
       return .failure(.badServerResponse)
     }
   }
-  
+
   /// Performs an API request and decodes the response data into a specified model.
   /// - Parameters:
   ///   - endpoint: The API endpoint to request.
@@ -222,7 +222,7 @@ public final class NetworkClientServiceImpl: NetworkClientService {
       throw error
     }
   }
-  
+
   /// Performs an API request and maps the response data using the provided mapper.
   /// - Parameters:
   ///   - endpoint: The API endpoint to request.

@@ -9,17 +9,17 @@ import SwiftUI
 struct UserListView: View {
   @EnvironmentObject private var router: Router
   @StateObject var viewModel: UserListViewModel
-  
+
   let perPage = 20
   @State private var page = 0
-  
+
   var body: some View {
     NavigationView {
       VStack {
         if viewModel.isLoading && viewModel.users.isEmpty {
           ProgressView("Loading...")
         }
-        
+
         List(viewModel.users, id: \.id) { user in
           Button(action: {
             router.navigate(to: UserDestination.userDetail(user.login))

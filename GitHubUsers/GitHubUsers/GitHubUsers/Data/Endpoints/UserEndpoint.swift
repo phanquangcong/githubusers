@@ -9,7 +9,7 @@ import Networking
 import Foundation
 
 public enum UserEndpoint {
-  
+
   /// Returns the `APIEndpoint` for the GitHub users' list API request.
   /// - Parameters:
   ///   - perPage: The number of users per page.
@@ -25,7 +25,7 @@ public enum UserEndpoint {
       ]
     )
   }
-  
+
   /// Returns the `APIEndpoint` for the GitHub user's details API request.
   /// - Parameter loginUsername: The GitHub username to fetch details for.
   /// - Returns: The configured `APIEndpoint` for the GitHub user's details.

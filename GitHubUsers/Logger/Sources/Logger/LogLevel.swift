@@ -18,7 +18,7 @@ public enum LogLevel {
   case warning // Warnings that might indicate potential issues.
   case error   // Errors that indicate a failure or problem requiring attention.
   case critical // Critical errors that indicate a major failure in the system.
-  
+
   /// Converts the `LogLevel` to its corresponding `Logging.Logger.Level` in Swift's logging system.
   ///
   /// - Returns: A `Logging.Logger.Level` that corresponds to the `LogLevel` enum value.

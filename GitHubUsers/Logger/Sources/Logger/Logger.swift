@@ -4,7 +4,7 @@ import Logging
 /// A protocol that defines the behavior for logging messages with different levels.
 /// Any logger implementation should conform to this protocol to allow flexible logging strategies.
 public protocol Logger {
-  
+
   /// Logs a message at a specific logging level.
   ///
   /// - Parameters:
@@ -23,17 +23,17 @@ public protocol Logger {
 ///
 /// - Uses `Logging.Logger` under the hood to actually perform the logging operations.
 public struct LoggerImpl: Logger {
-  
+
   /// The actual logger used for logging messages.
   private let logger: Logging.Logger
-  
+
   /// Initializes the logger with a specific label, which typically represents the source of the log (e.g., module name).
   ///
   /// - Parameter label: A string used to identify the source or module that generates the logs.
   public init(label: String) {
     logger = Logging.Logger(label: label)
   }
-  
+
   /// Logs a message with a specific log level.
   ///
   /// - Parameters:
@@ -53,17 +53,17 @@ public struct LoggerImpl: Logger {
 ///
 /// - This implementation is used when you need to disable logging or don't want any logs to be recorded.
 public struct NoLogger: Logger {
-  
+
   /// The actual logger used for logging messages (not used in `NoLogger`, but kept for initialization consistency).
   private let logger: Logging.Logger
-  
+
   /// Initializes the logger with a specific label. In `NoLogger`, this doesn't affect functionality as no logging is done.
   ///
   /// - Parameter label: A string used to identify the source or module that generates the logs (not used in `NoLogger`).
   public init(label: String) {
     logger = Logging.Logger(label: label)
   }
-  
+
   /// A no-op implementation of the `log` method. It does not perform any logging.
   ///
   /// - Parameters:

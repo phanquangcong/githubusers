@@ -13,11 +13,11 @@ enum UserDestination: Hashable {
 struct UserListCoordinator: View {
   @EnvironmentObject private var router: Router
   private let dependencies: Dependencies
-  
+
   init(dependencies: Dependencies) {
     self.dependencies = dependencies
   }
-  
+
   var body: some View {
     UserListView(viewModel: .init(userRepository: UserRepository(networkClientService: dependencies.apiClient)))
       .navigationDestination(for: UserDestination.self) { destination in
