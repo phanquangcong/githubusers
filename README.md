@@ -36,8 +36,6 @@ The app follows **Clean Architecture**, which separates concerns into distinct l
 ## Folder Structure
 
 ```
-plaintext
-Copy code
 GitHubUsersApp
 │
 ├── Models
