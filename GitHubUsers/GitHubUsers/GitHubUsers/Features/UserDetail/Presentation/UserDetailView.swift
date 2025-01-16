@@ -28,58 +28,76 @@ struct UserDetailView: View {
         ProgressView("Loading...")
           .padding()
       } else if let userDetail = viewModel.userDetail {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 16) {
           HStack {
             AsyncImage(url: URL(string: userDetail.avatarUrl)) { image in
               image.resizable()
                 .scaledToFit()
                 .frame(width: 80, height: 80)
-                .cornerRadius(50)
+                .cornerRadius(40)
             } placeholder: {
               ProgressView()
                 .frame(width: 80, height: 80)
             }
             .padding(.trailing, 16)
+
             VStack(alignment: .leading) {
               Text(userDetail.login)
                 .font(.headline)
-              Rectangle()
-                .fill(.gray.opacity(0.1))
-                .frame(height: 1)
-                .padding(.vertical, 4)
+                .padding(.bottom, 2)
               Text(userDetail.location)
+                .font(.subheadline)
+                .foregroundColor(.gray)
             }
           }
-          VStack(alignment: .center) {
-            Button(action: {
-              // Action for follow button
-            }) {
-              Text("Follow")
-                .font(.body)
-                .foregroundColor(.white)
-                .padding()
-                .frame(maxWidth: .infinity)
-                .background(.gray) // Use different colors for follow/following
-                .cornerRadius(8)
-            }
+          .shadow(radius: 10, x: 0, y: 5)
 
-            Button(action: {
-              // Action for following button
-            }) {
-              Text("Following")
-                .font(.body)
-                .foregroundColor(.white)
-                .padding()
-                .frame(maxWidth: .infinity)
-                .background(Color.blue) // You can customize this color
-                .cornerRadius(8)
+          Rectangle()
+            .fill(Color.gray.opacity(0.1))
+            .frame(height: 1)
+            .padding(.vertical, 8)
+
+          HStack(spacing: 30) {
+            VStack {
+              Image("icon_followers")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 50, height: 50)
+                .clipShape(Circle())
+              Text("\(userDetail.followers) Followers")
+                .font(.subheadline)
+            }
+            VStack {
+              Image("icon_following")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 50, height: 50)
+                .clipShape(Circle())
+              Text("\(userDetail.following) Following")
+                .font(.subheadline)
             }
           }
+          .frame(maxWidth: .infinity, alignment: .center)
+
+          Rectangle()
+            .fill(Color.gray.opacity(0.1))
+            .frame(height: 1)
+            .padding(.vertical, 8)
+
+          if let blogUrl = URL(string: userDetail.htmlUrl) {
+            VStack(alignment: .leading) {
+              Text("Blog")
+                .font(.headline)
+                .padding(.bottom, 2)
+              Link(destination: blogUrl) {
+                Text(userDetail.htmlUrl)
+                  .font(.subheadline)
+                  .foregroundColor(.blue)
+              }
+            }
+          }
+
           Spacer()
-          //          Text("Username: \(userDetail.login)")
-          //          Text("Location: \(userDetail.location)")
-          //          Text("Followers: \(userDetail.followers)")
-          //          Text("Following: ?")
         }
         .padding()
       }
